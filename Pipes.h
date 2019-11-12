@@ -23,18 +23,21 @@ typedef struct{
     const char trAll[4];
 } pipes;
 /** Variables to catch from the file and needed for functions*/
-int rows;
-int columns;
-int entries;
 
 int rows;
 int columns;
 int entries;
 int exits;
 
+
+
 pipes  **pipesMatrix;
 
 /** Functions */
+
+/**Function to read and change values of rows, columns, entries and exits*/
+void readData(int *ptrRows, int *ptrColumns, int *ptrEntries, int *ptrExits);
+/**Function to build a matrix of pipes*/
 pipes** buildMatrix(pipes** pipesMatrix, int rows, int columns);
 
 
