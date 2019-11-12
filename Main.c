@@ -2,9 +2,9 @@
 #include "Pipes.h"
 int main(){
 	
-	pipes** pipesMatrix;
-	rows = 4;
-	columns = 4;
+	readData(&rows,&columns,&entries,&exits);
+	printf("%d %d %d %d",rows,columns,entries,exits);
+	pipes **pipesMatrix;
 	pipesMatrix = buildMatrix(pipesMatrix,rows,columns);
     	
 	return 0;
