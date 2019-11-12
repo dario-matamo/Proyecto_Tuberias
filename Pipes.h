@@ -28,6 +28,7 @@ int columns = 0;
 int entries = 0;
 int exits = 0;
 
+pipes** buildMatrix(pipes** pipesMatrix, int rows, int columns);
 pipes  **pipesMatrix;
 
 
