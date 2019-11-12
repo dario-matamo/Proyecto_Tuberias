@@ -27,11 +27,11 @@ int rows;
 int columns;
 int entries;
 
-int rows = 0;
-int columns = 0;
-int entries = 0;
-
+int rows;
+int columns;
+int entries;
 int exits;
+
 pipes  **pipesMatrix;
 
 /** Functions */
