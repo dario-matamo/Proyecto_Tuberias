@@ -136,3 +136,17 @@ pipe pipeSpecifier;
     }
     return pipeSpecifier;
 }
+
+/**Function to fill the matrix with the pipes types*/
+void fillMatrix(pipe **pipesMatrix,int rows, int columns){
+	pipe aux;
+	char code;
+	for(int i=0;i<rows;i++){
+		for(int j=0;j<columns;j++){
+			scanf("%c",&code);
+			aux = specifyPipe(code);
+			pipesMatrix[i][j] = aux;
+		}
+	}
+}
+

@@ -21,3 +21,5 @@ void readData(int *ptrRows, int *ptrColumns, int *ptrEntries, int *ptrExits);
 pipe **buildMatrix(pipe **pipesMatrix, int rows, int columns);
 /**Function that specifies what type of pipe a hexadecimal code represents*/
 pipe specifyPipe(char code);
+/**Function to fill the matrix with the pipes types*/
+void fillMatrix(pipe **pipesMatrix,int rows,int columns);
