@@ -19,3 +19,5 @@ pipe **pipeMatrix;
 void readData(int *ptrRows, int *ptrColumns, int *ptrEntries, int *ptrExits);
 /**Function to build a matrix of pipes*/
 pipe **buildMatrix(pipe **pipesMatrix, int rows, int columns);
+/**Function that specifies what type of pipe a hexadecimal code represents*/
+pipe specifyPipe(char code);
