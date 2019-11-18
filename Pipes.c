@@ -1,21 +1,16 @@
-//Here are the devoloping of functions
-#include <stdlib.h>
-#include <stdio.h>
-#include "Pipes.h"
-
 /**Function to create a matrix of pipes*/
 pipe **buildMatrix(pipe **pipesMatrix, int rows, int columns){
-	pipesMatrix  = (pipe**)malloc(sizeof(pipe*)*rows);
-	for (int i = 0; i < rows; i++){
-        	pipesMatrix[i] = (pipe *)malloc(sizeof(pipe)*columns);
-	}
+pipesMatrix  = (pipe**)malloc(sizeof(pipe*)*rows);
+for (int i = 0; i < rows; i++){
+        pipesMatrix[i] = (pipe *)malloc(sizeof(pipe)*columns);
+}
    
-	return pipesMatrix;
+return pipesMatrix;
 }
 
 /**Function to read values of rows,columns,entries and exits*/
 void readData(int *ptrRows, int *ptrColumns, int *ptrEntries,int *ptrExits){
-	scanf("%d %d %d %d",ptrRows,ptrColumns,ptrEntries,ptrExits);
+scanf("%d %d %d %d",ptrRows,ptrColumns,ptrEntries,ptrExits);
 }
 
 /**Function that specifies what type of pipe a hexadecimal code represents*/
@@ -130,7 +125,7 @@ pipe pipeSpecifier;
                             }
                         }
                     }    
-                }   
+                }  
             }
         }
     }
@@ -138,15 +133,167 @@ pipe pipeSpecifier;
 }
 
 /**Function to fill the matrix with the pipes types*/
-void fillMatrix(pipe **pipesMatrix,int rows, int columns){
-	pipe aux;
-	char code;
-	for(int i=0;i<rows;i++){
-		for(int j=0;j<columns;j++){
-			scanf("%c",&code);
-			aux = specifyPipe(code);
-			pipesMatrix[i][j] = aux;
-		}
-	}
+void fillMatrix(pipe **pipesMatrix,int filas, int columnas){
+pipe aux;
+char code;
+char space;
+    for(int i=0;i<filas;i++){
+        for(int j=0;j<columnas;j++){
+            //Scan each code to make it a pipe type
+            scanf("%c",&code);
+            scanf("%c",&space);
+            aux = specifyPipe(code);
+            //Then add it to the matrix
+            pipesMatrix[i][j] = aux;
+        }
+    }
+}
+/**Function to get where are leaks*/
+void findLeaks(pipe **pipesMatrix,int rows, int columns){
+    for(int i=0;i<rows;i++){
+        for(int j=0;j<columns;j++){
+            //Case when row = 0 and column = 0
+            if(i == 0 && j==0){
+                if(pipesMatrix[i][j].right == '1' && pipesMatrix [i][j+1].left =='0' ){
+                    printf("Leak in position %d %d to the right\n",i,j);
+                }
+                if(pipesMatrix[i][j].down == '1' && pipesMatrix[i+1][j].up == '0'){
+                    printf("Leak in position %d %d down\n",i,j);
+                }
+                if(pipesMatrix[i][j].left == '1'){
+                    printf("Leak in position %d %d to the left\n",i,j);
+                }
+                if(pipesMatrix[i][j].up == '1'){
+                    printf("Leak in position %d %d up\n",i,j);
+                }
+            }else{
+                //case when row = 0 and column = max
+                if(i == 0 && j == (columns -1)){
+                    if(pipesMatrix[i][j].left == '1' && pipesMatrix[i][j-1].right == '0'){
+                        printf("Leak in position %d %d to the left\n",i,j);
+                    }
+                    if(pipesMatrix[i][j].down == '1' && pipesMatrix[i+1][j].up == '0'){
+                        printf("Leak in position %d %d down\n",i,j);
+                    }
+                    if(pipesMatrix[i][j].right == '1'){
+                        printf("Leak in position %d %d to the right\n",i,j);
+                    }
+                    if(pipesMatrix[i][j].up == '1'){
+                        printf("Leak in position %d %d up\n",i,j);
+                    }
+                }else{
+                    //Case when row = max and first column
+                    if(i==(rows-1) && j==0){
+                        if(pipesMatrix[i][j].right == '1' && pipesMatrix[i][j+1].left == '0'){
+                            printf("Leak in position %d %d to the right\n",i,j);
+                        }
+                        if(pipesMatrix[i][j].up == '1' && pipesMatrix[i-1][j].down == '0'){
+                            printf("Leak in position %d %d up\n",i,j);
+                        }
+                        if(pipesMatrix[i][j].left == '1'){
+                            printf("Leak in position %d %d to the left\n",i,j);
+                        }
+                        if(pipesMatrix[i][j].down == '1'){
+                            printf("Leak in position %d %d down\n",i,j);
+                        }
+                    }else{
+                        //Case when column = max and row = max
+                        if(i==(rows-1) && j==(columns-1)){
+                            if(pipesMatrix[i][j].left == '1' && pipesMatrix[i][j-1].right == '0'){
+                                printf("Leak in position %d %d to the left\n",i,j);
+                            }
+                            if(pipesMatrix[i][j].up == '1' && pipesMatrix[i-1][j].down == '0'){
+                                printf("Leak in position %d %d up\n",i,j);
+                            }
+                            if(pipesMatrix[i][j].right == '1'){
+                                printf("Leak in position %d %d to the right\n",i,j);
+                            }
+                            if(pipesMatrix[i][j].down == '1'){
+                                printf("Leak in position %d %d down\n",i,j);
+                            }
+                        }else{
+                            //Case row 0
+                            if(i == 0 && (j !=0 && j!=(columns-1))){
+                                if(pipesMatrix[i][j].left == '1' && pipesMatrix[i][j-1].right == '0'){
+                                    printf("Leak in position %d %d to the left\n",i,j);
+                                }
+                                if(pipesMatrix[i][j].down == '1' && pipesMatrix[i+1][j].up == '0'){
+                                    printf("Leak in position %d %d down\n",i,j);
+                                }
+                                if(pipesMatrix[i][j].right == '1' && pipesMatrix[i][j+1].left == '0'){
+                                    printf("Leak in position %d %d to the right\n",i,j);
+                                }
+                                if(pipesMatrix[i][j].up == '1'){
+                                    printf("Leak in position %d %d up\n",i,j);
+                                }
+                            }else{
+                                //Case row max
+                                if(i == rows-1 && (j !=0 && j!= columns-1)){
+                                    if(pipesMatrix[i][j].left == '1' && pipesMatrix[i][j-1].right == '0'){
+                                        printf("Leak in position %d %d to the left\n",i,j);
+                                    }
+                                    if(pipesMatrix[i][j].up == '1' && pipesMatrix[i-1][j].down == '0'){
+                                        printf("Leak in position %d %d up\n",i,j);
+                                    }
+                                    if(pipesMatrix[i][j].right == '1' && pipesMatrix[i][j+1].left == '0'){
+                                        printf("Leak in position %d %d to the right\n",i,j);
+                                    }
+                                    if(pipesMatrix[i][j].down == '1'){
+                                        printf("Leak in position %d %d down\n",i,j);
+                                    }
+                                }else{
+                                    //Case col 0
+                                    if((i != 0 && i != (rows-1)) && j == 0){
+                                        if(pipesMatrix[i][j].up == '1' && pipesMatrix[i-1][j].down == '0'){
+                                            printf("Leak in position %d %d up\n",i,j);
+                                        }
+                                        if(pipesMatrix[i][j].down == '1' && pipesMatrix[i+1][j].up == '0'){
+                                            printf("Leak in position %d %d down\n",i,j);
+                                        }
+                                        if(pipesMatrix[i][j].right == '1' && pipesMatrix[i][j+1].left == '0'){
+                                            printf("Leak in position %d %d to the right\n",i,j);
+                                        }
+                                        if(pipesMatrix[i][j].left == '1'){
+                                            printf("Leak in position %d %d to the left\n",i,j);
+                                        }
+                                    }else{
+                                        //case col max
+                                        if((i != 0 && i != (rows-1)) && j == columns-1){
+                                            if(pipesMatrix[i][j].up == '1' && pipesMatrix[i-1][j].down == '0'){
+                                                printf("Leak in position %d %d up\n",i,j);
+                                            }
+                                            if(pipesMatrix[i][j].down == '1' && pipesMatrix[i+1][j].up == '0'){
+                                                printf("Leak in position %d %d down\n",i,j);
+                                            }
+                                            if(pipesMatrix[i][j].left == '1' && pipesMatrix[i][j-1].right == '0'){
+                                                printf("Leak in position %d %d to the left\n",i,j);
+                                            }
+                                            if(pipesMatrix[i][j].right == '1'){
+                                                printf("Leak in position %d %d to the right\n",i,j);
+                                            } 
+                                        }else{
+                                            //Rest of cases
+                                            if(pipesMatrix[i][j].up == '1' && pipesMatrix[i-1][j].down == '0'){
+                                                printf("Leak in position %d %d up\n",i,j);
+                                            }
+                                            if(pipesMatrix[i][j].down == '1' && pipesMatrix[i+1][j].up == '0'){
+                                                printf("Leak in position %d %d down\n",i,j);
+                                            }
+                                            if(pipesMatrix[i][j].left == '1' && pipesMatrix[i][j-1].right == '0'){
+                                                printf("Leak in position %d %d to the left\n",i,j);
+                                            }
+                                            if(pipesMatrix[i][j].right == '1'&& pipesMatrix[i][j+1].left == '0'){
+                                                printf("Leak in position %d %d to the right\n",i,j);
+                                            } 
+                                        }
+                                    }
+                                }
+                            }
+                        }    
+                    }
+                }
+            }
+        }
+    }
 }
 
