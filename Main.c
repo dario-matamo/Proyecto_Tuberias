@@ -1,10 +1,20 @@
-#include <stdio.h>
-#include "Pipes.h"
 int main(){
+    pipe pruebaPipe;
+    leaks positionLeaks[100];
+    int rows = 3;
+    int columns = 3;
+    char c ;
+    int entries;
+    int exits;
+    leaks *ptrPositionLeaks = &positionLeaks[0];
+    readData(&rows,&columns,&entries,&exits);
+    scanf("%c",&c);
+    pipeMatrix = buildMatrix(pipeMatrix,rows,columns);
+    fillMatrix(pipeMatrix,rows,columns);
+    findLeaks(pipeMatrix,ptrPositionLeaks,rows,columns);
+   
 
-	readData(&rows,&columns,&entries,&exits);
-	printf("%d %d %d %d",rows,columns,entries,exits);
-	pipeMatrix = buildMatrix(pipeMatrix,rows,columns);
-    	
-	return 0;
+    printf("\n");
+    findLeaks(pipeMatrix,ptrPositionLeaks,rows,columns);
+    return 0;
 }
