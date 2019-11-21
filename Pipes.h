@@ -11,6 +11,11 @@ typedef struct{
     char left;
     char right;
 } pipe;
+/**Struct that contains the position of a leak*/
+typedef struct{
+    int column;
+    int row;
+}leaks;
 
 /**Variables to catch from the file and needed for functions*/
 
@@ -56,4 +61,28 @@ void fillMatrix(pipe **pipesMatrix,int rows,int columns);
  * @param rows Number of rows in the matrix
  * @param columns Number of columns in the matrix 
  */
-void findLeaks(pipe **pipesMatrix,int rows, int columns);
+void findLeaks(pipe **pipesMatrix,leaks *leaksArray,int rows, int columns);
+/**
+ * @brief Function that return 1 if in a position exist a leaks
+ * @param pipesMatrix Matrix made of pipes 
+ * @param row Row of the pipe
+ * @param column Column of the pipe
+*/
+int hasLeaks(pipe **pipesMatrix,int row, int column);
+/**
+ * @brief Function that rotates a pipe 
+ * @param pipeRotate Pipe that is going to rotate
+ */
+pipe rotatePipe(pipe pipeRotate){
+    char auxUp = pipeRotate.up;
+    char auxDown= pipeRotate.down;
+    char auxLeft= pipeRotate.left;
+    char auxRight= pipeRotate.right;
+    
+    pipeRotate.up = auxRight;
+    pipeRotate.right = auxDown;
+    pipeRotate.down = auxLeft;
+    pipeRotate.left = auxUp;
+    return pipeRotate;
+}
+void resolve(pipe **pipesMatrix,leaks *leaksArray,int rows,int columns);
